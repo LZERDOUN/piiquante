@@ -19,10 +19,27 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/api/user", (req, res, next) => {
+//Endpoint dédié à la création d'un utilisateur
+app.post("/api/auth/signup", (req, res, next) => {
   console.log(req.body);
   res.status(201).json({
     message: "Utilisateur créé !",
+  });
+});
+
+//Endpoint dédié à la connection d'un utilisateur
+app.post("/api/auth/login", (req, res, next) => {
+  console.log(req.body);
+  res.status(201).json({
+    message: "Utilisateur connecté !",
+  });
+});
+
+//Endpoint dédié à la création d'une sauce
+app.post("/api/api/sauces", (req, res, next) => {
+  console.log(req.body);
+  res.status(201).json({
+    message: "Sauce créée !",
   });
 });
 
