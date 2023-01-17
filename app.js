@@ -2,6 +2,9 @@ const express = require("express");
 
 const app = express();
 
+//Gérer requête POST venant du front-end pour extraire le corps JSON
+app.use(express.json());
+
 //Gestion erreurs de CORS (origines différentes)
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -14,6 +17,13 @@ app.use((req, res, next) => {
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
   next();
+});
+
+app.post("/api/user", (req, res, next) => {
+  console.log(req.body);
+  res.status(201).json({
+    message: "Utilisateur créé !",
+  });
 });
 
 app.use((req, res, next) => {
