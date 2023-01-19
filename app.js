@@ -1,6 +1,16 @@
 const express = require("express");
+const mongoose = require("mongoose");
 
 const app = express();
+
+// Connection de mongoose
+mongoose
+  .connect(
+    "mongodb+srv://zerdoun:Lololesarcs95@cluster0.pzi0hyb.mongodb.net/?retryWrites=true&w=majority",
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => console.log("Connexion à MongoDB réussie !"))
+  .catch(() => console.log("Connexion à MongoDB échouée !"));
 
 //Gérer requête POST venant du front-end pour extraire le corps JSON
 app.use(express.json());
