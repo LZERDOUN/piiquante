@@ -8,7 +8,7 @@ const app = express();
 // Connection de mongoose
 mongoose
   .connect(
-    "mongodb+srv://zerdoun:Lololesarcs95@cluster0.pzi0hyb.mongodb.net/?retryWrites=true&w=majority",
+    "mongodb+srv://zerdoun:Lololesarcs95@cluster0.pzi0hyb.mongodb.net/test?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
@@ -31,49 +31,13 @@ app.use((req, res, next) => {
   next();
 });
 
-//Endpoint dédié à la création d'un utilisateur
-app.post("/api/auth/signup", (req, res, next) => {
-  console.log(req.body);
-  res.status(201).json({
-    message: "Utilisateur créé !",
-  });
-});
-
-//Endpoint dédié à la connection d'un utilisateur
-app.post("/api/auth/login", (req, res, next) => {
-  console.log(req.body);
-  res.status(201).json({
-    message: "Utilisateur connecté !",
-  });
-});
-
-//Endpoint dédié à la création d'une sauce
+/*Endpoint dédié à la création d'une sauce
 app.post("/api/api/sauces", (req, res, next) => {
   console.log(req.body);
   res.status(201).json({
     message: "Sauce créée !",
   });
-});
-
-app.use((req, res, next) => {
-  console.log("Requête reçue !");
-  next();
-});
-
-app.use((req, res, next) => {
-  res.status(201);
-  next();
-});
-
-app.use((req, res, next) => {
-  res.json({ message: "Votre requête a bien été reçue !" });
-  next();
-});
-
-app.use((req, res, next) => {
-  console.log("Réponse envoyée avec succès !");
-  next();
-});
+});*/
 
 app.use("/api/auth", userRoutes);
 
