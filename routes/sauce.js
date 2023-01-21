@@ -4,14 +4,14 @@ const express = require("express");
 const router = express.Router();
 
 const auth = require("../middleware/auth");
+const multer = require("../middleware/multer-config");
 
-const stuffCtrl = require("../controllers/sauce");
+const stuffCtrl = require("../controllers/stuff");
 
-//A REFAIRE AVEC LETAPE 4 SUR LES SAUCES !!! CHAPITRE 3 PARTIE 6
-router.get("/", auth, stuffCtrl.getAllStuff);
-router.post("/", auth, stuffCtrl.createThing);
-router.get("/:id", auth, stuffCtrl.getOneThing);
-router.put("/:id", auth, stuffCtrl.modifyThing);
-router.delete("/:id", auth, stuffCtrl.deleteThing);
+router.get("/", auth, stuffCtrl.getAllSauces);
+router.post("/", auth, multer, stuffCtrl.createSauce);
+router.get("/:id", auth, stuffCtrl.getOneSauce);
+router.put("/:id", auth, multer, stuffCtrl.modifySauce);
+router.delete("/:id", auth, stuffCtrl.deleteSauce);
 
 module.exports = router;
