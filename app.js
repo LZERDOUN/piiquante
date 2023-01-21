@@ -31,6 +31,23 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/api/auth", userRoutes);
+
+//
+app.use((req, res, next) => {
+  console.log("Requête reçue !");
+  next();
+});
+
+app.use((req, res, next) => {
+  res.status(201);
+  next();
+});
+
+app.use((req, res, next) => {
+  res.json({ message: "Votre requête a bien été reçue !" });
+  next();
+});
 /*Endpoint dédié à la création d'une sauce
 app.post("/api/api/sauces", (req, res, next) => {
   console.log(req.body);
@@ -38,7 +55,5 @@ app.post("/api/api/sauces", (req, res, next) => {
     message: "Sauce créée !",
   });
 });*/
-
-app.use("/api/auth", userRoutes);
 
 module.exports = app;

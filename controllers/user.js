@@ -41,6 +41,7 @@ exports.login = (req, res, next) => {
           console.log(user);
           res.status(200).json({
             userId: user._id,
+            //Encoder user._id afin de l'utiliser pour la création de nouvelles sauces et qu'un autre utilisateur ne puisse pas la modifier
             token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
               expiresIn: "24h",
             }),
