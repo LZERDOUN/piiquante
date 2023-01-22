@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 const User = require(`../models/User`);
 
 // Middlewares d'authentification
-
 exports.signup = (req, res, next) => {
+  console.log(req.body);
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
@@ -22,6 +22,7 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
+  console.log(req.body);
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
