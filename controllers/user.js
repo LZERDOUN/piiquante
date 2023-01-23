@@ -27,8 +27,7 @@ exports.login = (req, res, next) => {
     .then((user) => {
       if (!user) {
         return res.status(401).json({
-          message:
-            "Erreur interne pas d'utilisateur - Paire login/mot de passe incorrecte",
+          message: "Erreur interne pas d'utilisateur",
         });
       }
       bcrypt

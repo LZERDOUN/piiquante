@@ -18,7 +18,7 @@ exports.createSauce = (req, res, next) => {
   sauce
     .save()
     .then(() => {
-      res.status(201).json({ message: "Suace enregistrée !" });
+      res.status(201).json({ message: "Sauce enregistrée !" });
     })
     .catch((error) => {
       res.status(400).json({ error });
@@ -89,4 +89,51 @@ exports.deleteSauce = (req, res, next) => {
     .catch((error) => {
       res.status(500).json({ error });
     });
+};
+
+//Gestion des likes
+exports.handleLike = (req, res, next) => {
+  const liker = req.body.userId;
+  let likeStatus = req.body.like;
+  Sauce.findOne({ _id: req.params.id })
+    .then((votedSauce) => {
+      if (likeStatus === 1) {
+        Sauce.updateOne(
+          { _id: req.params.id },
+          { $push: { usersLiked: liker }, $inc: { likes: 1 } }
+        )
+          .then(() => res.status(201).json({ message: "you liked this sauce" }))
+          .catch((error) => res.status(400).json({ error }));
+      } else if (likeStatus === -1) {
+        Sauce.updateOne(
+          { _id: req.params.id },
+          { $inc: { dislikes: 1 }, $push: { usersDisliked: liker } }
+        )
+          .then(() =>
+            res.status(201).json({ message: "you disliked this sauce" })
+          )
+          .catch((error) => res.status(400).json({ error }));
+      } else if (likeStatus === 0) {
+        if (votedSauce.usersLiked.includes(liker)) {
+          Sauce.updateOne(
+            { _id: req.params.id },
+            { $inc: { likes: -1 }, $pull: { usersLiked: liker } }
+          )
+            .then(() =>
+              res.status(201).json({ message: "you un-liked this sauce" })
+            )
+            .catch((error) => res.status(400).json({ error }));
+        } else if (votedSauce.usersDisliked.includes(liker)) {
+          Sauce.updateOne(
+            { _id: req.params.id },
+            { $inc: { dislikes: -1 }, $pull: { usersDisliked: liker } }
+          )
+            .then(() =>
+              res.status(201).json({ message: "you un-disliked this sauce" })
+            )
+            .catch((error) => res.status(400).json({ error }));
+        }
+      }
+    })
+    .catch((error) => res.status(400).json({ error }));
 };
