@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require(`../models/User`);
 
 // Middlewares d'authentification
-exports.signup = (req, res, next) => {
+exports.signup = (req, res) => {
   console.log(req.body);
   bcrypt
     .hash(req.body.password, 10)
@@ -21,7 +21,7 @@ exports.signup = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-exports.login = (req, res, next) => {
+exports.login = (req, res) => {
   console.log(req.body);
   User.findOne({ email: req.body.email })
     .then((user) => {
@@ -42,7 +42,7 @@ exports.login = (req, res, next) => {
           res.status(200).json({
             userId: user._id,
             //Encoder user._id afin de l'utiliser pour la création de nouvelles sauces et qu'un autre utilisateur ne puisse pas la modifier
-            token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
+            token: jwt.sign({ userId: user._id }, process.env.TOKEN_SECRET, {
               expiresIn: "24h",
             }),
           });
