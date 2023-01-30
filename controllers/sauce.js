@@ -3,7 +3,6 @@ const fs = require("fs");
 
 //Ajouter une sauce
 exports.createSauce = (req, res) => {
-  console.log(req.body);
   const sauceObject = JSON.parse(req.body.sauce);
   delete sauceObject._id;
   delete sauceObject._userId;
@@ -32,7 +31,7 @@ exports.getAllSauces = (req, res) => {
 };
 
 //Afficher une sauce spécifique
-exports.getOneSauce = (req, res, next) => {
+exports.getOneSauce = (req, res) => {
   Sauce.findOne({ _id: req.params.id })
     .then((sauce) => res.status(200).json(sauce))
     .catch((error) => res.status(404).json({ error }));

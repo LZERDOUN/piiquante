@@ -3,9 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require(`../models/User`);
 
-// Middlewares d'authentification
 exports.signup = (req, res) => {
-  console.log(req.body);
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
@@ -22,13 +20,10 @@ exports.signup = (req, res) => {
 };
 
 exports.login = (req, res) => {
-  console.log(req.body);
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
-        return res.status(401).json({
-          message: "Erreur interne pas d'utilisateur",
-        });
+        return res.status(401).json({ error });
       }
       bcrypt
         .compare(req.body.password, user.password)

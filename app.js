@@ -11,7 +11,6 @@ const app = express();
 const PORT = process.env.PORT;
 
 // Connection de mongoose
-//ATTENTION VARIABLE DENVIRONNEMENT MOT DE PASSE + TOKEN CLE SECRETE (login/middleware auth)
 mongoose
   .connect(
     `mongodb+srv://zerdoun:${process.env.DB_SECRET}@cluster0.pzi0hyb.mongodb.net/test?retryWrites=true&w=majority`,
